@@ -23,7 +23,7 @@ For evaluation metric, **F1 score** was used. For the loss function, **cross-ent
 In terms of data augmentation, Vosoughi et all[3] applied the synonym based replacement technique introduced by Zhang et al [4]. The only difference is that instead of thesaurus, they used Word2Vec, with the intuition that Word2Vec covers more phrases regarding the targets.
 
 # Explore the data
-In terms of data distribution in stance, the ratio among **AGAINST**, **FAVOR** and **NONE** is 2:1:1, which is not too bad, but the model has the potential to skew to the dominant class. In that case, even if the model has good performance, it doesn't necessarily represent the 3 classes equally or generate well in real life. Therefore, normalised class weights is applied.
+In terms of data distribution in stance, the ratio among **AGAINST**, **FAVOR** and **NONE** is 2:1:1, which is not too bad, but the model has the potential to skew to the dominant class. In that case, even if the model has good performance, it doesn't necessarily represent the 3 classes equally or generate well in real life. Therefore, normalised class weights is applied. <br>
 <img align = "center" width="450" height="300" src="screenshots/stance_dis.png"> <br><br>
 In this task, besides the overall performance, we're also interested in the performance in each individual target. The distribution among the 5 targets are not perfectly evenly distributed, but in general it's not too bad. <br>
 <img align = "center" width="450" height="300" src="screenshots/targets_dis.png"> <br><br>
