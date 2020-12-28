@@ -15,7 +15,7 @@ It's very common that the target of interest is not mentioned in the tweet but i
 In order to make the model generalize better, in data collection, a large amount of tweets that express an opinion towards the target of interest without explicitly mentioning it by name were picked.[1]
 
 # Literature review 
-For this task, the CNN + BiLSTM architecture I experimented is based on a Multi- Kernel Convolution and Attentive LSTM Variants model proposed by SIDDIQUA et al[2]. The proposed model combine the attention based densely connected Bi-LSTM and nested LSTM with multi- kernel convolution. In order to tackle the problem that sometimes target is not included in the tweet, as input, the corresponding target is appended with the Tweet. Multi-kernel convolution filters extract features from the word embedding before feeding it to the densely connected Bi-LSTM and nested LSTMs. Different size of kernel [2,3,4,5] extracts features in groups of sequential [2,3,4,5] words at a time. Densely connected Bi- LSTM and nested LSTMs are for handling overfitting, vanishing gradient and long-term independency, which are common in RNN. The attention mechanism helps pay attention to the important part of the hidden state sequences.
+For this task, the CNN + BiLSTM architecture I experimented is based on a Multi- Kernel Convolution and Attentive LSTM Variants model proposed by SIDDIQUA et al[2]. The proposed model combine the attention based densely connected Bi-LSTM and nested LSTM with multi- kernel convolution. In order to tackle the problem that sometimes target is not included in the tweet, as input, the corresponding target is appended with the Tweet. Multi-kernel convolution filters extract features from the word embedding before feeding it to the densely connected Bi-LSTM and nested LSTMs. Different size of kernel [2,3,4,5] extracts features in groups of sequential [2,3,4,5] words at a time. Densely connected Bi- LSTM and nested LSTMs are for handling overfitting, vanishing gradient and long-term independency, which are common in RNN. The attention mechanism helps pay attention to the important part of the hidden state sequences.<br>
 <img align="center" width="300" height="500" src="screenshots/referenced_images/CNN_BiLSTM.png">
 
 For evaluation metric, **F1 score** was used. For the loss function, **cross-entropy** was used. For optimizer, **Adam** was applied.
@@ -24,15 +24,15 @@ In terms of data augmentation, Vosoughi et all[3] applied the synonym based repl
 
 # Explore the data
 In terms of data distribution in stance, the ratio among **AGAINST**, **FAVOR** and **NONE** is 2:1:1, which is not too bad, but the model has the potential to skew to the dominant class. In that case, even if the model has good performance, it doesn't necessarily represent the 3 classes equally or generate well in real life. Therefore, normalised class weights is applied.
-<img align = "center" width="450" height="300" src="screenshots/stance_dis.png">
-In this task, besides the overall performance, we're also interested in the performance in each individual target. The distribution among the 5 targets are not perfectly evenly distributed, but in general it's not too bad. 
-<img align = "center" width="450" height="300" src="screenshots/targets_dis.png">
-Similarly, we also look at the stance distribution within each individual target. The distribution in general skews to AGAINST, roughly AGAINST : FAVOUR : NONE = 2:1:1, except for 'Climate Change is a Real Concern' with much fewer data points for AGAINST than FAVOR or NONE.
+<img align = "center" width="450" height="300" src="screenshots/stance_dis.png"> <br><br>
+In this task, besides the overall performance, we're also interested in the performance in each individual target. The distribution among the 5 targets are not perfectly evenly distributed, but in general it's not too bad. <br>
+<img align = "center" width="450" height="300" src="screenshots/targets_dis.png"> <br><br>
+Similarly, we also look at the stance distribution within each individual target. The distribution in general skews to AGAINST, roughly AGAINST : FAVOUR : NONE = 2:1:1, except for 'Climate Change is a Real Concern' with much fewer data points for AGAINST than FAVOR or NONE. <br>
 <img align = "center" width="450" height="300" src="screenshots/within_target_dis.png">
 
 # Split the data
-In order to make the model performance in validation set represents not only each individual target, but also each stance within each target. Validation set includes 40 sampled data points out of each Stance within each Target, except for 'AGAINST' in 'Climate Change', which doesn't contain enough data points, so 40% out of 'Climate Change - AGAINST' was sampled. In total, it makes up around 20% of the training set.
-<img align = "center" width="450" height="300" src="screenshots/val_dis.png">
+In order to make the model performance in validation set represents not only each individual target, but also each stance within each target. Validation set includes 40 sampled data points out of each Stance within each Target, except for 'AGAINST' in 'Climate Change', which doesn't contain enough data points, so 40% out of 'Climate Change - AGAINST' was sampled. In total, it makes up around 20% of the training set. <br>
+<img align = "center" width="450" height="300" src="screenshots/val_dis.png"> 
 
 # Pre-process the data
 In this task, stance prediction involves 2 inputs, which are tweets and targets. In order to include both as input, target is appended with tweet for the embedding layer. 
@@ -94,34 +94,38 @@ In **transformerA**, the validation F1 score is similar to model_c, but the loss
 In **transformerB**, with a higher dropout rate, overfitting is slightly reduced and the performance stays roughly the same. Thus model_c is still the best model.
 
 ## Part 4
-In the last part of training, augmented data was included in the training set. The architecture of **model_c_AUG** is the same as model_c. The performance turned out to be much worse than that of model_c, validation f1 score dropped from 0.35 to 0.25. It shows that the text augmentation actually hurt the model. In the future, I would like to explore different types of text augmentation techniques. Therefore, model_c is picked as the best model.
+In the last part of training, augmented data was included in the training set. The architecture of **model_c_AUG** is the same as model_c. The performance turned out to be much worse than that of model_c, validation f1 score dropped from 0.35 to 0.25. It shows that the text augmentation actually hurt the model. In the future, I would like to explore different types of text augmentation techniques. Therefore, **model_c** is picked as the best model.
 
 # Evaluation on test dataset
 We look at the confusion matrix and accuracy on each Stance within an individual Target.
-<img align = "center" width="350" height="300" src="screenshots/Atheism_confusion_matrix.png">
-For '**Atheism**', it performs well on AGAINST, worst on FAVOR. 43% of FAVOR is predicted as AGAINST. 
+<img align = "center" width="350" height="300" src="screenshots/Atheism_confusion_matrix.png"> <br>
+For '**Atheism**', it performs well on AGAINST, worst on FAVOR. 43% of FAVOR is predicted as AGAINST. <br>
 
-<img align = "center" width="350" height="300" src="screenshots/climate_change_confusion_matrix.png"><br>
-For '**Climate Change**’, FAVOR performs the best and AGAINST performs worst, and 10 out of AGAINST instances are predicted to be FAVOR.
+<img align = "center" width="350" height="300" src="screenshots/climate_change_confusion_matrix.png"> <br>
+For '**Climate Change**’, FAVOR performs the best and AGAINST performs worst, and 10 out of AGAINST instances are predicted to be FAVOR. <br>
 
-<img align = "center" width="350" height="300" src="screenshots/feminism_confusion_matrix.png"><br> 
-For '**Feminist Movement**', FAVOR performs the best and AGAINST performs the worst. More than half of AGAINST instances are predicted to be FAVOR.
+<img align = "center" width="350" height="300" src="screenshots/feminism_confusion_matrix.png"> <br> 
+For '**Feminist Movement**', FAVOR performs the best and AGAINST performs the worst. More than half of AGAINST instances are predicted to be FAVOR. <br>
 
-<img align = "center" width="350" height="300" src="screenshots/Hilary_Clinton_confusion_matrix.png"><br>
-For '**Hilary Clinton**', None performs the best, with an accuracy of 0.82, AGAINST performs the worst, it has only an accuracy of 0.51 and 30% of 'AGAINST' are predicted to be NONE.
+<img align = "center" width="350" height="300" src="screenshots/Hilary_Clinton_confusion_matrix.png"> <br>
+For '**Hilary Clinton**', None performs the best, with an accuracy of 0.82, AGAINST performs the worst, it has only an accuracy of 0.51 and 30% of 'AGAINST' are predicted to be NONE. <br>
 
-<img align = "center" width="350" height="300" src="screenshots/abortion_confusion_matrix.png"><br>
-For '**Abortion**', 'None' has an accuracy of 0.68, 'AGAINST' has an accuracy of 0.53. 32% of 'AGAINST' are predicted to be 'NONE'.
+<img align = "center" width="350" height="300" src="screenshots/abortion_confusion_matrix.png"> <br>
+For '**Abortion**', 'None' has an accuracy of 0.68, 'AGAINST' has an accuracy of 0.53. 32% of 'AGAINST' are predicted to be 'NONE'. <br>
 
 # Independent evaluation
 For independent evaluation, 30 tricky tweets, 2 for each stance in each individual target, were collected. Even though part of the Tweets mentioned the targets by its names, it's still quite difficult to deduce the stance. The evaluation result shows that the model (model_c) doesn't do well in real life data.
 
 # Reference
 [1]Mohammad, S., Kiritchenko, S., Sobhani, P., Zhu, X. and Cherry, C., 2016. SemEval-2016 Task 6: Detecting Stance in Tweets. Proceedings of the 10th International Workshop on Semantic Evaluation (SemEval-2016),.
+
 [2]SIDDIQUA, Umme Aymun, CHY, Abu Nowshed, and AONO, Masaki. "Tweet Stance Detection Using Multi-Kernel Convolution and Attentive LSTM Variants." IEICE Transactions on Information and Systems E102.D.12 (2019): 2493-503. Web.
-[3]Vijayaraghavan, Prashanth, Sysoev, Ivan, Vosoughi, Soroush, and Roy, Deb. "DeepStance at SemEval-2016 Task 6: Detecting Stance in Tweets Using Character and Word-Level
-CNNs." (2016). Web.
-[4]Zhang, Xiang, and LeCun, Yann. "Text Understanding from Scratch." (2015). Web. [5]https://medium.com/analytics-vidhya/accuracy-vs-f1-score-6258237beca2
+
+[3]Vijayaraghavan, Prashanth, Sysoev, Ivan, Vosoughi, Soroush, and Roy, Deb. "DeepStance at SemEval-2016 Task 6: Detecting Stance in Tweets Using Character and Word-Level CNNs." (2016). Web.
+
+[4]Zhang, Xiang, and LeCun, Yann. "Text Understanding from Scratch." (2015). Web. 
+
+[5]https://medium.com/analytics-vidhya/accuracy-vs-f1-score-6258237beca2
 
 
 
