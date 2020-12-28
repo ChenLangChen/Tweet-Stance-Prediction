@@ -97,7 +97,7 @@ In **transformerB**, with a higher dropout rate, overfitting is slightly reduced
 In the last part of training, augmented data was included in the training set. The architecture of **model_c_AUG** is the same as model_c. The performance turned out to be much worse than that of model_c, validation f1 score dropped from 0.35 to 0.25. It shows that the text augmentation actually hurt the model. In the future, I would like to explore different types of text augmentation techniques. Therefore, **model_c** is picked as the best model.
 
 # Evaluation on test dataset
-We look at the confusion matrix and accuracy on each Stance within an individual Target.
+We look at the confusion matrix and accuracy on each Stance within an individual Target. <br>
 <img align = "center" width="350" height="300" src="screenshots/Atheism_confusion_matrix.png"> <br>
 For '**Atheism**', it performs well on AGAINST, worst on FAVOR. 43% of FAVOR is predicted as AGAINST. <br>
 
