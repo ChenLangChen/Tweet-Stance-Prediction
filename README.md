@@ -42,7 +42,7 @@ In this task, stance prediction involves 2 inputs, which are tweets and targets.
 - Tokens without meaning such as **punctuations**, **stop-words** and **non-alphabetic characters** except for **#** are removed. The reason why we keep # is that # is has meaning in Tweet, and GloVe Tweet embedding can recognise #. Case is maintained sensitive in this task, as words written in upper case conveys sentiment, such as anger and surprise.
 
 # Data Augmentation
-A word embedding (GloVe) synonym based approach is applied. For every tweet in the training set, the sentence is augmented by substituting some words with synonyms in the GloVe context. With text augmentation, the number of training dataset is doubled. Text augmentation is not applied in the validation set, as text augmentation doesn't necessarily improve the performance, and we want to find out whether it's actually helpful.
+A word embedding (GloVe) synonym based approach is applied. For every tweet in the training set, the sentence is augmented by substituting some words with synonyms in the GloVe context. With text augmentation, the number of training dataset is doubled.[6] Text augmentation is not applied in the validation set, as text augmentation doesn't necessarily improve the performance, and we want to find out whether it's actually helpful.
 
 # Why Bi-directional LSTM
 In handling time-series data, such as a sequence of words, RNN suffers from short- term memory which is due to vanishing gradient during back propagation. Layers from the beginning of the neural network with small gradients stop learning. LSTM solves the problem with a mechanism called gate that can regulate the flow of information, making
@@ -127,6 +127,7 @@ For independent evaluation, 30 tricky tweets, 2 for each stance in each individu
 
 [5]https://medium.com/analytics-vidhya/accuracy-vs-f1-score-6258237beca2
 
+[6] https://github.com/makcedward/nlpaug
 
 
 
